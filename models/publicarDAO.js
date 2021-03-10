@@ -12,8 +12,16 @@ module.exports = {
                 callback(null)
         })
     },
-    getAllpublications : (callback) => {
+    getAllPublicacion : (callback) => {
+        let sql = 'SELECT * FROM publicaciones'
+        bd.query(sql,(err, data) => {
+            if (err) throw err
 
+            if (data.length > 0)
+                callback(data)
+            else
+                callback(null)
+        })
     },
     insertPublicacion : (publicacion, okCallback, failCallback) => {
         let sql = 'INSERT INTO publicaciones SET ?'

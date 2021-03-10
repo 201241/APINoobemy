@@ -24,7 +24,7 @@ router.use('/', (req, res, next) => {
 })
 
 //Zona de Routing
-//router.get('/usernameValidate/:username',usersService.usernameValidate);
+router.get('/getAllPublicacion/',publicacionServicio.getAllPublicacion);
 router.post('/addPublicacion',publicacionServicio.addPublicacion)  //Servicio exclusivo para usuarios validados
 //router.post('/login',usersService.login)
 
