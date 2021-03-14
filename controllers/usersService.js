@@ -65,7 +65,8 @@ const login = (req,res) => {
                 res.send({
                     status: true,
                     message: 'Contraseña correcta',
-                    token: jwt.generateToken(data)
+                    token: jwt.generateToken(data),
+                    idUser: data.idUser
                 })
             } else {
                 res.send({
@@ -82,10 +83,15 @@ const login = (req,res) => {
     })
 }
 
+const getDatos = (req, res) => {
+
+}
+
 module.exports = {
     usernameValidate,
     signup,
-    login
+    login,
+    getDatos
 }
 
 

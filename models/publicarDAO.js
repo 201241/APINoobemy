@@ -17,10 +17,13 @@ module.exports = {
         bd.query(sql,(err, data) => {
             if (err) throw err
 
-            if (data.length > 0)
+            if (data.length > 0){
                 callback(data)
-            else
+            }
+            else{
                 callback(null)
+            }
+
         })
     },
     insertPublicacion : (publicacion, okCallback, failCallback) => {

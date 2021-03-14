@@ -4,7 +4,7 @@ const publicarDAO=require('../models/publicarDAO')
 const getAllPublicacion = (req,res) => {
     publicarDAO.getAllPublicacion((data) =>{
         try {
-            if (!data) throw new Err("Catálogo vacío")
+            if (!data) throw new Err("Publicacion vacío")
 
             res.send({
                 status: true,
@@ -14,7 +14,7 @@ const getAllPublicacion = (req,res) => {
         catch(Err) {
             res.send({
                 status: false,
-                message: 'Catálogo vacío'
+                message: 'Publicacion vacío'
             })
         }
     })
