@@ -7,7 +7,6 @@ module.exports = {
             if (err) throw err
 
             if (data.length>0)
-
                  callback(data[0])  //Enviar el primer registro de la consulta
             else
                  callback(null)
@@ -18,16 +17,14 @@ module.exports = {
 
         bd.query(sql,userId, (err, data) => {
             if (err) throw err
-
             alert("datos name:" + data[0])
             if (data.length>0)
-                callback(data[0]) //Enviar el primer registro de la consulta
+                return  callback(data[0]) //Enviar el primer registro de la consulta
 
             else
-                callback(null)
+                return  callback(null)
         })
     },
-
     insertUser : (user, okCallback, failCallback) => {
         let sql = 'INSERT INTO user SET ?'
         bd.query(sql, user, (err, data) => {
