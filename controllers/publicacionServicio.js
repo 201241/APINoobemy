@@ -17,6 +17,8 @@ const getAllPublicacion = (req,res) => {
                 message: 'Publicacion vacío'
             })
         }
+    }, err=>{
+
     })
 };
 
@@ -30,7 +32,7 @@ const addPublicacion = (req, res) => {
             doc : req.body.doc
 
         }
-
+        console.log(publicacion.seccion)
         publicarDAO.insertPublicacion(publicacion, (data) => {
             res.send({
                 status: true,

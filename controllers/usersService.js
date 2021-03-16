@@ -23,35 +23,26 @@ const usernameValidate = (req, res) => {
 
 const signup = (req, res) => {
     console.log('Signup => in')
-    if (req.user) {
-        const user = {
-            idRol : req.body.idRol,
-            nombre : req.body.nombre,
-            apellidoPaterno : req.body.apellidoPaterno,
-            username : req.body.username,
-            password : bcrypt.hashSync(req.body.password,10)
-        }
 
-        userDAO.insertUser(user, (data) => {
-            res.send({
-                status: true,
-                message: 'Usuario creado exitosamente'
-            })
-        }, err => {
-            res.send({
-                status:false,
-                message: 'Ha ocurrido un error al crear la cuenta de usuario',
-                errorMessage: err
-            })
-        })
+    const user = {
+        nombre : req.body.nombre,
+        apellidoPaterno : req.body.apellidoPaterno,
+        username : req.body.username,
+        password : bcrypt.hashSync(req.body.password,10)
     }
-    else {
+
+    userDAO.insertUser(user, (data) => {
+        res.send({
+            status: true,
+            message: 'Usuario creado exitosamente'
+        })
+    }, err => {
         res.send({
             status:false,
-            message: 'Este servicio requiere el uso de un Token válido, contactar al administrador',
-            error: '100. Falta token'
+            message: 'Ha ocurrido un error al crear la cuenta de usuario',
+            errorMessage: err
         })
-    }
+    })
 
 }
 
@@ -85,6 +76,23 @@ const login = (req,res) => {
 
 const getDatos = (req, res) => {
 //
+    userDAO.getAllUsers(req.params.userId, (data) =>{
+        try {
+            if (!data) throw new Err("Usuario disponible")
+
+            res.send({
+                status: true,
+                message: 'encontrados',
+                datos: data.username
+            })
+        }
+        catch(Err) {
+            res.send({
+                status: false,
+                message: 'no encontrados'
+            })
+        }
+    })
 }
 
 module.exports = {
