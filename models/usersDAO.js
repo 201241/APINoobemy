@@ -19,8 +19,10 @@ module.exports = {
         bd.query(sql,userId, (err, data) => {
             if (err) throw err
 
+            alert("datos name:" + data[0])
             if (data.length>0)
                 callback(data[0]) //Enviar el primer registro de la consulta
+
             else
                 callback(null)
         })
