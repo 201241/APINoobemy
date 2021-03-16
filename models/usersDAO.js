@@ -25,6 +25,7 @@ module.exports = {
                 callback(null)
         })
     },
+
     insertUser : (user, okCallback, failCallback) => {
         let sql = 'INSERT INTO user SET ?'
         bd.query(sql, user, (err, data) => {

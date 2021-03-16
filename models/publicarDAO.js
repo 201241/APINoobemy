@@ -26,6 +26,7 @@ module.exports = {
 
         })
     },
+
     insertPublicacion : (publicacion, okCallback, failCallback) => {
         let sql = 'INSERT INTO publicaciones SET ?'
         bd.query(sql, publicacion, (err, data) => {

@@ -14,4 +14,5 @@ conn.connect(function(err) {
     console.log('Conexión a la base de datos exitosa!');
 });
 
+
 module.exports = conn;
