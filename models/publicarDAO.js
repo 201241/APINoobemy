@@ -26,6 +26,36 @@ module.exports = {
 
         })
     },
+    getAllPublicacionWeb : (callback) => {
+        condicion="programacion web";
+        let sql = 'SELECT * FROM publicaciones WHERE seccion=?'
+        bd.query(sql,condicion,(err, data) => {
+            if (err) throw err
+
+            if (data.length > 0){
+                callback(data)
+            }
+            else{
+                callback(null)
+            }
+
+        })
+    },
+    getAllPublicacionBD : (callback) => {
+        condicion="base de datos";
+        let sql = 'SELECT * FROM publicaciones WHERE seccion=?'
+        bd.query(sql,condicion,(err, data) => {
+            if (err) throw err
+
+            if (data.length > 0){
+                callback(data)
+            }
+            else{
+                callback(null)
+            }
+
+        })
+    },
 
     insertPublicacion : (publicacion, okCallback, failCallback) => {
         let sql = 'INSERT INTO publicaciones SET ?'
