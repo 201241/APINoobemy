@@ -75,23 +75,44 @@ const login = (req,res) => {
 }
 
 const getDatos = (req, res) => {
-//
-    userDAO.getAllUsers(req.params.userId, (data) =>{
-        try {
-            if (!data) throw new Err("Usuario disponible")
+    let idUser= req.params.idUser;
+    userDAO.getAllUsers(idUser, (data) =>{
 
-            res.send({
-                status: true,
-                message: 'encontrados',
-                datos: data.username
-            })
-        }
-        catch(Err) {
-            res.send({
-                status: false,
-                message: 'no encontrados'
-            })
-        }
+        res.send({
+            status: true,
+            message: 'Usuario datos...',
+            body: data
+        })
+    },err =>{
+        res.send({
+            status:false,
+            body:null
+        })
+    })
+}
+
+const update = (req, res) => {
+    console.log('update => in')
+
+    const userUpDate = {
+        idUser: req.body.idUser,
+        nombre : req.body.nombre,
+        apellidoPaterno : req.body.apellidoPaterno,
+        username : req.body.username,
+        password : bcrypt.hashSync(req.body.password,10)
+    }
+
+    userDAO.upDate(userUpDate, (data) => {
+        res.send({
+            status: true,
+            message: 'Usuario actualizado exitosamente'
+        })
+    }, err => {
+        res.send({
+            status:false,
+            message: 'Ha ocurrido un error al actualizar la cuenta de usuario',
+            errorMessage: err
+        })
     })
 }
 
@@ -99,7 +120,8 @@ module.exports = {
     usernameValidate,
     signup,
     login,
-    getDatos
+    getDatos,
+    update
 }
 
 

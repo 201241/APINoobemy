@@ -12,17 +12,19 @@ module.exports = {
                  callback(null)
         })
     },
-    getAllUsers : (userId, callback) => {
+    getAllUsers : (idUser, callback) => {
+        console.log("id user:" + idUser);
         let sql = 'SELECT * FROM user WHERE idUser=?'
-
-        bd.query(sql,userId, (err, data) => {
+        bd.query(sql,idUser, (err, data) => {
             if (err) throw err
-            alert("datos name:" + data[0])
+
+            console.log("si jala:" + data[0])
+
             if (data.length>0)
-                return  callback(data[0]) //Enviar el primer registro de la consulta
+                callback(data[0]) //Enviar el primer registro de la consulta
 
             else
-                return  callback(null)
+                callback(null)
         })
     },
     insertUser : (user, okCallback, failCallback) => {
@@ -33,5 +35,18 @@ module.exports = {
             else
                 return okCallback(data)
         })
+    },
+    upDate : (userUpDate, okCallback, failCallback) => {
+        idUser = userUpDate.idUser;
+                                                    //UPDATE Persona SET Direccion='Calle 15 # 12 - 89' WHERE Apellido = 'Gil';
+        let sql = 'UPDATE user SET ? WHERE idUser=?'
+        //UPDATE user SET ? where idUser=14;
+        bd.query(sql, userUpDate,idUser, (err, data) => {
+            if (err)
+                return failCallback(err)
+            else
+                return okCallback(data)
+        })
     }
+
 }
