@@ -56,6 +56,38 @@ module.exports = {
 
         })
     },
+    getAllPublicacionDiseno : (callback) => {
+        condicion="diseño";
+        let sql = 'SELECT * FROM publicaciones WHERE seccion=?'
+        bd.query(sql,condicion,(err, data) => {
+            if (err) throw err
+
+            if (data.length > 0){
+                callback(data)
+            }
+            else{
+                callback(null)
+            }
+        })
+    },
+
+    getAllPublicacionPerfil : (idUser,callback) => {
+        console.log("id user<<<>>>:" + idUser);
+        let sql = 'SELECT * FROM publicaciones WHERE Id_user=?'
+        bd.query(sql,idUser,(err, data) => {
+            if (err) throw err
+
+            console.log("si jala:" + data[0])
+
+            if (data.length > 0){
+                callback(data)
+            }
+            else{
+                callback(null)
+            }
+        })
+    }
+    ,
 
     insertPublicacion : (publicacion, okCallback, failCallback) => {
         let sql = 'INSERT INTO publicaciones SET ?'
@@ -64,6 +96,21 @@ module.exports = {
                 return failCallback(err)
             else
                 return okCallback(data)
+        })
+    },
+
+    deletePublicacion : (idPublicacion, callback) => {
+        let sql = 'DELETE FROM publicaciones WHERE Id_publicacion = ?'
+        bd.query(sql,idPublicacion, (err, data) => {
+            console.log("err =>",err)
+            console.log("data =>",data)
+            try {
+                if (err) throw new Err('Error en la eliminación')
+                return callback(data)
+            }
+            catch (Err) {
+                return callback(null)
+            }
         })
     }
 }

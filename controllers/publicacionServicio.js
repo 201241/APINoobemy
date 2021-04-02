@@ -49,10 +49,27 @@ const getAllPublicacionBD = (req,res) => {
     })
 };
 
+const getAllPublicacionDiseno = (req,res) => {
+    publicarDAO.getAllPublicacionDiseno((data) =>{
+
+        res.send({
+            status: true,
+            body: data
+        })
+
+    },err => {
+        res.send({
+            status:false,
+            body: null
+        })
+    })
+};
+
 const addPublicacion = (req, res) => {
     console.log('addPublicacion => in')
 
         const publicacion = {
+            Id_user: req.body.idUser,
             titulo : req.body.titulo,
             seccion: req.body.seccion,
             comentario : req.body.comentario,
@@ -75,10 +92,48 @@ const addPublicacion = (req, res) => {
 
 }
 
+const getAllPublicacionPerfil = (req,res) => {
+    let idUser=req.params.idUser;
+    publicarDAO.getAllPublicacionPerfil(idUser,(data) =>{
+
+        res.send({
+            status: true,
+            body: data
+        })
+
+    },err => {
+        res.send({
+            status:false,
+            body: null
+        })
+    })
+};
+
+const deletePublicacion = (req, res) => {
+    publicarDAO.deletePublicacion(req.params.idPublicacion, data => {
+        try {
+            if (!data) throw new Err("Hubo un error en el proceso")
+            if (data.affectedRows === 0) throw new Err(`Falló la eliminación del idPublicacion: ${req.params.idPublicacion}`)
+            res.send({
+                status: true,
+                message: `Eliminación de idPublicacion: ${req.params.idPublicacion} fue exitosa`
+            })
+        }
+        catch (Err) {
+            res.send({
+                status: false,
+                message: '<Personalizar el mensaje de error'
+            })
+        }
+    })
+}
 
 module.exports = {
     addPublicacion,
     getAllPublicacion,
     getAllPublicacionWeb,
-    getAllPublicacionBD
+    getAllPublicacionBD,
+    getAllPublicacionDiseno,
+    getAllPublicacionPerfil,
+    deletePublicacion
 }
