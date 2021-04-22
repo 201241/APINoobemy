@@ -66,29 +66,55 @@ const getAllPublicacionDiseno = (req,res) => {
 };
 
 const addPublicacion = (req, res) => {
-    console.log('addPublicacion => in')
 
-        const publicacion = {
-            Id_user: req.body.idUser,
-            titulo : req.body.titulo,
-            seccion: req.body.seccion,
-            comentario : req.body.comentario,
-            doc : req.body.doc
+    const publicacion = {
+        Id_user: req.body.idUser,
+        titulo : req.body.titulo,
+        seccion: req.body.seccion,
+        comentario : req.body.comentario
+    }
 
+    publicarDAO.insertPublicacion(publicacion, (data) => {
+        let status = {
+            status: true,
+            description: null
         }
-        console.log(publicacion.seccion)
-        publicarDAO.insertPublicacion(publicacion, (data) => {
-            res.send({
-                status: true,
-                message: 'Publicacion completa'
-            })
-        }, err => {
-            res.send({
-                status:false,
-                message: 'Publicacion no pudo ser subida',
-                errorMessage: err
-            })
+
+        if(req.files.doc){
+            const doc = req.files.doc;
+            const fileName = doc.name;
+            const path = __dirname + '/../public/uploads/' + fileName;
+
+            try{
+                doc.mv(path,(error)=> {
+                    if (error) throw new Error("Problemas al mover el archivo")
+                    publicarDAO.updatePublicacionDoc('/uploads/'+fileName, data.insertId,
+                        data => {
+                        status.description = "Registro almacenado correctamente"
+                            res.status(200).send(status);
+                        },
+                        error =>{
+                        status.description = "Hunieron problemas al actualizar la ruta del doc"
+                            res.status(200).send(status);
+                        })
+                })
+            } catch (e) {
+                status.description = " Registro almacenado correctamente, pero hubieron problemas al mover el archivo"
+                res.status(200).send(status);
+            }
+        } else {
+            status.description = "Registro almacenado correctamente, sin doc (imagen)"
+            res.send(status)
+        }
+
+    }, err => {
+
+        res.send({
+            status:false,
+            message: 'Publicacion no pudo ser subida',
+            errorMessage: err
         })
+    })
 
 }
 

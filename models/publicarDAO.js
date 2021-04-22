@@ -99,6 +99,17 @@ module.exports = {
         })
     },
 
+    updatePublicacionDoc : (doc, idPub,okCallback, failCallback) => {
+        let sql = 'UPDATE publicaciones SET doc=? WHERE Id_publicacion=?'
+        bd.query(sql, [doc,idPub], (err, data) => {
+            if (err)
+                return failCallback(err)
+            else
+                return okCallback(data)
+        })
+
+    },
+
     deletePublicacion : (idPublicacion, callback) => {
         let sql = 'DELETE FROM publicaciones WHERE Id_publicacion = ?'
         bd.query(sql,idPublicacion, (err, data) => {

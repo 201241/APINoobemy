@@ -31,6 +31,7 @@ router.get('/getAllPublicacionDiseno/',publicacionServicio.getAllPublicacionDise
 router.post('/addPublicacion',publicacionServicio.addPublicacion)  //Servicio exclusivo para usuarios validados
 router.get('/getAllPublicacionPerfil/:idUser',publicacionServicio.getAllPublicacionPerfil)
 router.delete('/deletePublicacion/:idPublicacion',publicacionServicio.deletePublicacion)
+
 //publicar/getAllPublicacionDiseño
 // getAll
 // getAllWeb
