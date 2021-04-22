@@ -71,16 +71,15 @@ const addPublicacion = (req, res) => {
         Id_user: req.body.idUser,
         titulo : req.body.titulo,
         seccion: req.body.seccion,
-        comentario : req.body.comentario
+        comentario : req.body.comentario,
     }
-
     publicarDAO.insertPublicacion(publicacion, (data) => {
         let status = {
             status: true,
             description: null
         }
-
-        if(req.files.doc){
+        console.log(">>"+req.files)
+        if(req.files){
             const doc = req.files.doc;
             const fileName = doc.name;
             const path = __dirname + '/../public/uploads/' + fileName;
@@ -94,13 +93,13 @@ const addPublicacion = (req, res) => {
                             res.status(200).send(status);
                         },
                         error =>{
-                        status.description = "Hunieron problemas al actualizar la ruta del doc"
+                        status.description = "Hubieron problemas al actualizar la ruta del doc"
                             res.status(200).send(status);
                         })
                 })
             } catch (e) {
                 status.description = " Registro almacenado correctamente, pero hubieron problemas al mover el archivo"
-                res.status(200).send(status);
+                res.status(500).json(status);
             }
         } else {
             status.description = "Registro almacenado correctamente, sin doc (imagen)"
@@ -111,29 +110,34 @@ const addPublicacion = (req, res) => {
 
         res.send({
             status:false,
-            message: 'Publicacion no pudo ser subida',
-            errorMessage: err
+            description: 'Publicacion no pudo ser subida',
+            error: err,
         })
     })
-
+    //errorMessage: err,
 }
 
 const getAllPublicacionPerfil = (req,res) => {
     let idUser=req.params.idUser;
     publicarDAO.getAllPublicacionPerfil(idUser,(data) =>{
 
-        res.send({
-            status: true,
-            body: data
-        })
+        try{
+            if(!data) throw new Err("Error en la consulta")
+            console.log(data)
+            res.send({
+                status: true,
+                body: data,
+            })
+        }
+        catch (Err){
+            res.send({
+                status: false,
+                message: 'Error en la consulta'
+            })
+        }
 
-    },err => {
-        res.send({
-            status:false,
-            body: null
-        })
     })
-};
+}
 
 const deletePublicacion = (req, res) => {
     publicarDAO.deletePublicacion(req.params.idPublicacion, data => {
@@ -161,5 +165,5 @@ module.exports = {
     getAllPublicacionBD,
     getAllPublicacionDiseno,
     getAllPublicacionPerfil,
-    deletePublicacion
+    deletePublicacion,
 }

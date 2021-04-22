@@ -77,7 +77,7 @@ module.exports = {
         bd.query(sql,idUser,(err, data) => {
             if (err) throw err
 
-            console.log("si jala:" + data[0])
+            console.log("si jala:" + data[0].titulo)
 
             if (data.length > 0){
                 callback(data)
