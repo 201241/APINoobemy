@@ -65,6 +65,22 @@ const getAllPublicacionDiseno = (req,res) => {
     })
 };
 
+const getAllPublicacionMatematicas = (req,res) => {
+    publicarDAO.getAllPublicacionMatematicas((data) =>{
+
+        res.send({
+            status: true,
+            body: data
+        })
+
+    },err => {
+        res.send({
+            status:false,
+            body: null
+        })
+    })
+};
+
 
 const addPublicacion = (req, res) => {
 
@@ -165,6 +181,7 @@ module.exports = {
     getAllPublicacionWeb,
     getAllPublicacionBD,
     getAllPublicacionDiseno,
+    getAllPublicacionMatematicas,
     getAllPublicacionPerfil,
     deletePublicacion,
 }

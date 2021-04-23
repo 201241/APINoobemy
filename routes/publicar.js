@@ -28,6 +28,7 @@ router.get('/getAllPublicacion/',publicacionServicio.getAllPublicacion);
 router.get('/getAllPublicacionWeb/',publicacionServicio.getAllPublicacionWeb);
 router.get('/getAllPublicacionBD/',publicacionServicio.getAllPublicacionBD);
 router.get('/getAllPublicacionDiseno/',publicacionServicio.getAllPublicacionDiseno);
+router.get('/getAllPublicacionMatematicas',publicacionServicio.getAllPublicacionMatematicas);
 router.post('/addPublicacion',publicacionServicio.addPublicacion)  //Servicio exclusivo para usuarios validados
 router.get('/getAllPublicacionPerfil/:idUser',publicacionServicio.getAllPublicacionPerfil)
 router.delete('/deletePublicacion/:idPublicacion',publicacionServicio.deletePublicacion)

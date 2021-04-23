@@ -71,6 +71,21 @@ module.exports = {
         })
     },
 
+    getAllPublicacionMatematicas : (callback) => {
+        condicion="matematicas";
+        let sql = 'SELECT * FROM publicaciones WHERE seccion=?'
+        bd.query(sql,condicion,(err, data) => {
+            if (err) throw err
+
+            if (data.length > 0){
+                callback(data)
+            }
+            else{
+                callback(null)
+            }
+        })
+    },
+
     getAllPublicacionPerfil : (idUser,callback) => {
         console.log("id user<<<>>>:" + idUser);
         let sql = 'SELECT * FROM publicaciones WHERE Id_user=?'
